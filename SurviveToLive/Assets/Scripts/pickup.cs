@@ -7,7 +7,7 @@ public class pickup : MonoBehaviour
     private inventory inventory;
 
     public GameObject itemButton;
-    void Start()
+    void Start() 
     {
         inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<inventory>();
     }

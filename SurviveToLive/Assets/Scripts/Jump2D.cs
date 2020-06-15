@@ -2,10 +2,14 @@
 
 public class Jump2D : MonoBehaviour
 {
-    [SerializeField] private LayerMask platform;
+    [SerializeField] 
+    private LayerMask platform;
     private Rigidbody2D rigidbody2d;
     private BoxCollider2D boxCollider2d;
+    private bool SpawnJumpEffect;
     public ParticleSystem dust;
+    public ParticleSystem jumpEffect;
+    public ParticleSystem LandEffect;
 
     private void Awake()
     {
@@ -18,7 +22,7 @@ public class Jump2D : MonoBehaviour
     {
         if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
         {
-            CreateDust();
+            CreateJumpEffect();
             float jumpVelocity = 6f;
             rigidbody2d.velocity = Vector2.up * jumpVelocity;
         }
@@ -32,6 +36,19 @@ public class Jump2D : MonoBehaviour
         {
             CreateDust();
         }
+
+        if (IsGrounded())
+        {
+            if (SpawnJumpEffect == true)
+            {
+                CreateLandEffect();
+                SpawnJumpEffect = false;
+            }
+        }
+        else
+        {
+            SpawnJumpEffect = true;
+        }
     }
 
     private bool IsGrounded()
@@ -44,5 +61,15 @@ public class Jump2D : MonoBehaviour
     void CreateDust()
     {
         dust.Play();
+    }
+
+    void CreateJumpEffect()
+    {
+        jumpEffect.Play();
+    }
+
+    void CreateLandEffect()
+    {
+        LandEffect.Play();
     }
 } 
